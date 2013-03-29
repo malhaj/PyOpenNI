@@ -29,7 +29,7 @@ See the [github page](https://github.com/jmendeth/PyOpenNI) if you want to submi
 Things you'll need:
 
  - [GIT](http://git-scm.org) to download
- - [OpenNI](http://openni.org) and [Python](http://python.org) 2.7 or higher
+ - [OpenNI](http://openni.org) (latest unstable version: 1.5.4.0) and [Python](http://python.org) 2.7 or higher
  - [CMake](http://cmake.org)
  - A compiler for your platform (GCC, XCode, VS, MinGW, ...)
 
