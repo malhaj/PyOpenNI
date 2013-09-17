@@ -538,8 +538,6 @@ BOOST_PYTHON_MODULE(openni) {
             ;
 
 
-
-
     ////////////////////////////////////////////////////////////////////////////
     // class Context
 
@@ -557,11 +555,35 @@ BOOST_PYTHON_MODULE(openni) {
             .def("start_generating_all", &Context_StartGeneratingAll_wrapped, Context_StartGeneratingAll_DOC)
             .def("stop_generating_all", &Context_StopGeneratingAll_wrapped, Context_StopGeneratingAll_DOC)
             .def("find_existing_node", &Context_FindExistingNode_wrapped)
-            .def("open_file_recording", &Context_OpenFileRecording_wrapped, Context_OpenFileRecording_DOC)
-
+            .def("open_file_recording", &Context_OpenFileRecording_wrapped, Context_OpenFileRecording_DOC)        
+	    .def("enumerate_production_trees", &Context_EnumerateProductionTrees_wrapped) 
+            .def("create_depth_generator_on_node", &Context_CreateDepthGeneratorOnNode)     
+	    .def("create_image_generator_on_node", &Context_CreateImageGeneratorOnNode)
+	    
             .add_property("valid", &Context_IsValid, Context_valid_DOC)
 
             ;
+
+    ////////////////////////////////////////////////////////////////////////////
+    // class NodeInfoList
+
+   class_< xn::NodeInfoList::Iterator> ("Iterator", no_init)
+	    .def("next", &NodeInfoListIterator_Increment)
+	    .def("compare", &NodeInfoListIterator_Compare)
+            ;
+
+
+    class_< xn::NodeInfoList > ("NodeInfoList")
+
+            // methods
+
+            .def("begin", &NodeInfoList_Begin_wrapped)
+	    .def("end", &NodeInfoList_End_wrapped)
+
+            //.add_property("iterator", &xn::NodeInfoList::Iterator)
+
+            ;
+
 
 
     ////////////////////////////////////////////////////////////////////////////

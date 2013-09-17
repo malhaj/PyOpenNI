@@ -39,6 +39,15 @@ BP::object Context_OpenFileRecording_wrapped(xn::Context& self, const std::strin
 void Context_StartGeneratingAll_wrapped(xn::Context& self);
 void Context_StopGeneratingAll_wrapped(xn::Context& self);
 
+xn::NodeInfoList::Iterator NodeInfoList_Begin_wrapped(xn::NodeInfoList& self);
+xn::NodeInfoList::Iterator NodeInfoList_End_wrapped(xn::NodeInfoList& self);
+
+void NodeInfoListIterator_Increment(xn::NodeInfoList::Iterator& self);
+XnBool NodeInfoListIterator_Compare(xn::NodeInfoList::Iterator& self, xn::NodeInfoList::Iterator& iterator);
+void Context_EnumerateProductionTrees_wrapped(xn::Context& self, xn::NodeInfoList& productionList, XnProductionNodeType type);
+void Context_CreateDepthGeneratorOnNode(xn::Context& self, xn::NodeInfoList::Iterator& iterator, xn::DepthGenerator& depthNode);
+void Context_CreateImageGeneratorOnNode(xn::Context& self, xn::NodeInfoList::Iterator& iterator, xn::ImageGenerator& imageNode);
+
 BP::object Context_FindExistingNode_wrapped(xn::Context& self, XnProductionNodeType type);
 
 void Context_Shutdown_wrapped(xn::Context& self);
