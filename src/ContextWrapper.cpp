@@ -26,6 +26,66 @@
 #include "wrapperExceptions.h"
 #include "util/PythonOutputStream.h"
 
+xn::NodeInfoList::Iterator NodeInfoList_Begin_wrapped(xn::NodeInfoList& self) {
+	return self.Begin();
+}
+
+xn::NodeInfoList::Iterator NodeInfoList_End_wrapped(xn::NodeInfoList& self) {
+	return self.End();
+}
+
+void NodeInfoListIterator_Increment(xn::NodeInfoList::Iterator& self) {
+	self++;
+	return;
+} 
+
+XnBool NodeInfoListIterator_Compare(xn::NodeInfoList::Iterator& self, xn::NodeInfoList::Iterator& iterator) {
+    return (self == iterator);
+}
+
+void Context_CreateDepthGeneratorOnNode(xn::Context& self, xn::NodeInfoList::Iterator& iterator, xn::DepthGenerator& depthNode) {
+	
+	XnStatus returnCode;	
+	xn::NodeInfo deviceInfo = *iterator;
+	returnCode = self.CreateProductionTree(deviceInfo);
+	check(returnCode);
+
+	xn::Query query;
+	query.AddNeededNode(deviceInfo.GetInstanceName());	
+
+	returnCode = self.CreateAnyProductionTree(XN_NODE_TYPE_DEPTH, &query, depthNode);	
+    	return check(returnCode);
+}
+
+void Context_CreateImageGeneratorOnNode(xn::Context& self, xn::NodeInfoList::Iterator& iterator, xn::ImageGenerator& imageNode) {
+	
+	XnStatus returnCode;	
+	xn::NodeInfo deviceInfo = *iterator;
+	returnCode = self.CreateProductionTree(deviceInfo);
+	check(returnCode);
+
+	xn::Query query;
+	query.AddNeededNode(deviceInfo.GetInstanceName());	
+
+	returnCode = self.CreateAnyProductionTree(XN_NODE_TYPE_IMAGE, &query, imageNode);
+	return check(returnCode);
+}
+
+void Context_EnumerateProductionTrees_wrapped(xn::Context& self, xn::NodeInfoList& productionList, XnProductionNodeType type) {
+
+    XnStatus returnCode;
+    returnCode = self.EnumerateProductionTrees(type, NULL, productionList);
+
+    if (returnCode == XN_STATUS_OK)
+        PyCout << "Enumeration of nodes done successfully" << std::endl;
+    else {
+        PyCout << "Enumeration Failed: " <<
+                xnGetStatusName(returnCode) << std::endl;
+    }
+
+    return check(returnCode);
+}
+
 void Context_InitFromXmlFile_wrapped(xn::Context& self, const std::string& initializationFilename) {
 
 #ifdef _DEBUG
